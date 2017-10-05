@@ -1,0 +1,40 @@
+# steel-automation-service
+# .gitignore
+
+# node
+node_modules
+.env
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# runtime data
+pids
+*.pid
+*.seed
+
+# instrumented libs
+lib-cov
+
+# instrumentation
+coverage
+coverage_it
+testresults
+.nyc_output
+
+# grunt
+.grunt
+
+# compiled binary addons
+build/Release
+
+# idea files
+.idea
+
+# vscode
+.vscode
+
+# docker
+.dockerignore
