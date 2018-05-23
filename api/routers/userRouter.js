@@ -1,15 +1,15 @@
 'use strict';
 const router = require('express').Router();
-const listUsers = require('../controllers').listUsers.getInstance({});
-const deleteUser = require('../controllers').deleteUser.getInstance({});
-const updateUser = require('../controllers').updateUser.getInstance({});
-const createUser = require('../controllers').createUser.getInstance({});
+const listUsers = require('../controllers').listUsers;
+const deleteUser = require('../controllers').deleteUser;
+const updateUser = require('../controllers').updateUser;
+const createUser = require('../controllers').createUser;
 
 /**
  *  create user - POST 
  */
 router.post('/', (req, res) => {
-	return createUser.newInfo(req, res)
+	return createUser.newInfo(req)
 		.then((response) => {        
 			res.status(200).json(response);
 		})
@@ -51,14 +51,15 @@ router.put('/:userId', (req, res) => {
 	let update = {
 		UserId: req.params.userId,
 		info: req.body
-	}
+	};
+
 	updateUser.updateUser(update)
-	.then((resp) => {
-		res.status(200).send(resp);
-	})
-	.catch((err) => {    
-		res.status(500).send('Database error');
-	});
+		.then((resp) => {
+			res.status(200).send(resp);
+		})
+		.catch(() => {
+			res.status(500).send('Database error');
+		});
 });
 
 /**

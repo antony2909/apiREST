@@ -1,23 +1,17 @@
 'use strict';
-const createUser = require('../../resources/js/').createUser;
 
 
 let UserInstance = false;
-let di = {};
 
 class createUsers {
-    constructor (di) {
-        this.model = di.model || createUser
-	};
+	constructor (di) {
+		this.model = di.model;
+	}
 	
-	validateInput (input) {
-		let _this = this;
-		let header = input.headers.token;
+	validateInput (input) {		
 		let body = input.body;
 		
-		return new Promise((response, reject) => {   
-			// myLogger('adfada');  
-					  
+		return new Promise((response, reject) => {
 			if(0 === Object.keys(body).length && Object === body.constructor) {
 				return reject('Invalid JSON');
 			} 
@@ -35,35 +29,36 @@ class createUsers {
 			}
 
 			let validatedInfo = {
-				token: input.headers.token,
 				body:  input.body
-			}
-			return response({validated: validatedInfo, _this: this});
+			};
+			return response({validated: validatedInfo});
 		
 		}); 
 	}
 	
 	saveInput (info) {
-		let _this = info._this;
+		let _this = this;
 		let infoUser = info.validated.body; 
-		return new Promise((response, reject) => {   
+		return new Promise((response, reject) => {
 			return _this.model.UserCreate(infoUser)
 				.then((res) => {
-					response(res);			
-				})  
-				.catch((err) => {									
-					reject(err);                
-				});          
+					response(res);
+				})
+				.catch((err) => {
+					reject(err);
+				});
 		});
 	}
 	
-	newInfo (req, res) { 
-		return new Promise((response, reject) => {   
-			let _this = this;
-			this.validateInput(req)
-				.then(_this.saveInput)
+	newInfo (req) { 
+		let _this = this;
+		return new Promise((response, reject) => {
+			return _this.validateInput(req)
+				.then((validatedBody)=>{
+					return _this.saveInput(validatedBody);
+				})
 				.then((resp) => {
-					return response(resp);
+					response(resp);
 				})
 				.catch((err) => { 
 					reject(err);
@@ -78,13 +73,15 @@ class createUsers {
 let newcreateUserInstance;
 
 function getInstance (di) {
-    if(!UserInstance){
-        newcreateUserInstance = new createUsers(di);
-    }
-    return newcreateUserInstance;
+	if(!UserInstance){
+		newcreateUserInstance = new createUsers(di);
+	}
+	return newcreateUserInstance;
 }
 
 
 module.exports = {
-    getInstance: (di) => { return getInstance(di)}
-}
+	getInstance: (di) => { 
+		return getInstance(di);
+	}
+};

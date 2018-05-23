@@ -1,8 +1,5 @@
 'use strict';
 
-//const db = require('../models');
-
-let di = {};
 let UserInstance = false;
 
 class updateUser {
@@ -15,8 +12,8 @@ class updateUser {
 			name:       data.name,
 			surname:	data.surname,
 			email:      data.email,
-			address:    data.address		    
-		}     
+			address:    data.address
+		};
 		return info;
 	}
 
@@ -28,14 +25,14 @@ class updateUser {
 			return _this.UserModel.user.update(
 				data,
 				{where:{id: UserInfo.UserId}})
-				.then((res) => {    
+				.then(() => {    
 					let UserUpdated = {
 						UserId: UserInfo.UserId,
 						res: UserData
-					};                  
+					};
 					resp(UserUpdated);
 				})
-				.catch((err) => {                
+				.catch((err) => {
 					reject(err);
 				});
 		});

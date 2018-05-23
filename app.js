@@ -3,8 +3,7 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	helmet = require('helmet'),
 	cookieParser = require('cookie-parser'),
-	routers = require('./api/routers'),
-	cors = require('cors');
+	routers = require('./api/routers');
 
 
 
@@ -14,12 +13,12 @@ app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token");
 	// intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
+	if ('OPTIONS' == req.method) {
 		res.send(200);
-	  }
-	  else {
+	}
+	else {
 		next();
-	  }
+	}
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));

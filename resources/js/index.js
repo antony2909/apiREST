@@ -10,5 +10,5 @@ module.exports = {
 	createUser: createUser,
 	listUsers: listUsers,
 	deleteUser: deleteUser,
-	updateUser: updateUser    
+	updateUser: updateUser
 };
