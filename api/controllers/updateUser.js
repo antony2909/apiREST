@@ -32,5 +32,7 @@ function getInstance (di) {
 
 
 module.exports = {
-	getInstance: (di) => { return getInstance(di)}
-}
+	getInstance: (di) => { 
+		return getInstance(di);
+	}
+};
